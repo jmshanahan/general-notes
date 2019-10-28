@@ -16,3 +16,32 @@ docker stop will send the signal SIGTERM followed by SIGKILL after a grace perio
 
 docker kill sends SIGKILL right away
 
+To create a volume
+docker volume create <name of volume>
+
+to list volumes
+docker volume ls
+To remove volumes
+docker volume prune
+
+To remove a single volume
+docker volume rm [name of the volume]
+
+
+To inspect a volume and get its details
+docker inspect [name of volume]
+
+To build a container with a prebuild volume. I put the volume under the same directory as the app.
+docker run -d -p 8000:3000 --name my-container --volume $(pwd):/logs chrisnoring/node
+
+Note $(pwd):/logs
+
+To get into the container
+docker exec -it my-container bash
+To kill of a container you will need to kill it and remove it
+docker kill my-container && docker rm my-container
+
+
+
+
+
