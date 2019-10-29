@@ -30,8 +30,15 @@ Full connection parameters would be either
 
 ```
 psql -h myhost -p 5430 -d mydb -U myuser
-psql postgresql://myuser@myhost:5432/mydb
 ```
+
+I had difficulty with the above but this worked
+
+```
+sudo -u portal psql -d test -U portal
+```
+
+where portal is a user on the linux system and owner of the database test.u
 
 The default port is 5432
 
@@ -90,3 +97,85 @@ Not sure what du means, my guess is it means display users so from the prompt en
 ```
 
 This will give you a list of users and their privilages.
+
+## From psql prompt
+
+To get a list oc options
+
+```
+\?
+```
+
+To get a list of the databases
+
+```
+\l
+```
+
+When you see the databases listed if you want to connect to another database
+
+```
+\c josephd
+```
+
+where josephd is another database
+
+To get a list of tables in a database
+
+```
+\d
+```
+
+and
+describes the details of the table.
+
+```
+\d table name
+```
+
+To see just the tables.
+
+```
+\dt
+```
+
+To run a sql file
+
+```
+\i /home/joseph/Downloads/person.sql
+```
+
+BTW: The table data was generated from mockaroo.com
+
+## Postgresql Authentication Methods
+
+### Peer Authentication
+
+This authentication method will use the base operating system's user name and password as the postgresql database server user account to login. this method is only effective for local postgresql connection.
+
+### Password Authentication
+
+This authentication method will only need the user to provide username and password, and this methos is effective for both local and remote postgresql database server connection. The password can be saved bothin clear-text or md5-encrepted.
+
+### Changing methods
+
+You will need to go to the
+
+```
+/etc/postgresql/11/main/pg_hba.conf
+```
+
+and find
+
+```
+local all postgres peer
+```
+
+and change to
+
+```
+local all postgees md5
+```
+
+I had a problem with getting this to work so I put it back to the way it was.
+Anyway if I have trouble in the future this is where I need to be looking.
