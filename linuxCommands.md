@@ -103,3 +103,11 @@ blkid -o ls
 
 Any of the above commands will give you a list of the devices.
 And if they are mounted.
+
+
+### netstat
+To check what ports a service is listening on
+```
+sudo netstat -lnp | grep redis
+```
+
