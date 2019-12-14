@@ -104,10 +104,162 @@ blkid -o ls
 Any of the above commands will give you a list of the devices.
 And if they are mounted.
 
-
 ### netstat
+
 To check what ports a service is listening on
+
 ```
 sudo netstat -lnp | grep redis
 ```
 
+### host
+
+To get the ip address for a domain name.
+
+```
+host josephshanahan.biz
+host jshanahan.biz
+```
+
+### To determine what accounts are on your system
+
+```
+awk -F: '($3 >= '1000') {print}' /etc/passwd
+```
+
+### Disable root login
+
+Take advantage of pam_securetty module
+
+```
+auth [user_unknown=ignore success=ok ignore=ignore default=bad] pam_securetty.so
+```
+
+To disabling SSH root logins
+
+Edit /etc/ssh/sshd_config
+
+PermitRootLogin no
+
+systemctl reload sshd
+
+### Virtual consoles
+
+To get to a virtual console tty
+
+```
+CTRL + ALT F1 .....
+```
+
+### To set the editor that you want to use
+
+To do this set the EDITOR environment variable
+
+```
+export EDITOR=nano
+```
+
+set it to nano
+
+```
+export EDITOR=vi
+```
+
+Sets it to vi.
+
+### To check what you can do
+
+```
+sudo -l
+```
+
+### Syntax checking when for sudo configuration files
+
+```
+visudo
+```
+
+### LIst services that are running ou your computer
+
+```
+netstat -nutlp
+```
+
+### Determine which ports are open
+
+nmap is a good tool. It needs to be installed.
+
+Another good one is
+
+The following command will display all of the listening and extablished network connections.
+
+```
+lsof -i
+```
+
+## SSH
+
+To enforce Key Authentication. ie no password authentication
+In teh /etc/ssh/sshd_config
+set
+
+```
+PasswordAuthentication no
+```
+
+To disable root login on an ssh
+
+```
+PermitRootLogin no
+```
+
+To restrict ssh login to specific users,
+
+```
+AllowUsers user1 user2 userN
+```
+
+You can do a similar thing with groups
+
+```
+AllowGroups group1 ...
+```
+
+### Using SSH Port forwarding
+
+For example if you wanted to connect to a mysql database listing on the localhost
+use the following
+
+```
+ssh -L 3306:127.0.0.1:3306 server1
+```
+
+This allows you to use a client on your local machine listening on 3306 to attach it to a database on server1 listening on 3306.
+
+Allowing TCP Port Forwarding is a concern and should be disabled if not required.
+To disable TCP Port Forwarding set
+
+```
+AllowTcpForwarding no
+GatewayPorts no
+```
+
+Where possible use SSHv2 instead of SSHv1
+To force protocol 2 set the following in the ssh configuration file.
+
+```
+Protocol 2
+```
+
+By default SSH listens to all ports on the system. If you want to bind it to an host or address set the following
+
+```
+ListenAddress host_or_address1
+ListenAddress host_or_addressN
+```
+
+### Firewall Fundementals
+
+### netcat
+
+nc -v 10.0.0.8 80
