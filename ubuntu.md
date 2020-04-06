@@ -29,3 +29,7 @@ curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 sudo apt-get update && sudo apt-get install yarn
 ```
+
+If you are in root account and you want the ssh keys to a newly created account ie billy. You can use the following command
+
+rsync --archive --chown=billy:billy ~/.ssh /home/billy

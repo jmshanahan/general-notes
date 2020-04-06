@@ -1,8 +1,9 @@
 ## Introduction
+
 How to implement shell scripting.
 
-
 ## Basic
+
 To get shells available
 `cat /etc/shells`
 
@@ -11,7 +12,6 @@ To get the path to the bash
 
 Need to know this so we can add it to the top of the bash script.
 It normally will be `/bin/bash`
-
 
 ## Redirect to file
 
@@ -25,3 +25,10 @@ You will need to press ctrl+d to exit it.
 To append the text replace `>` with `>>`
 `cat >> file.txt`
 
+## Groups
+
+To add a user to a group
+sudo usermod -aG [group] \${USER}
+
+To check what groups a user is belong to.
+id -nG
