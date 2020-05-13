@@ -46,6 +46,12 @@ Shows how much disk space is being used by docker.
 Finally, if we want to use Docker without root privileges, we need to run the following command:
 sudo usermod -aG docker \$(whoami)
 
+#### no-cache
+
+Be careful if for example you are building images and you are pulling files of say github as part of the building process.
+You will need to get the latest files from github so you will not want to use a cached version that may reside on your machine.
+In this instance you will need to tack --no-cache onto the command so it pulls the correct files from github
+
 ### Containers
 
 docker run dit [image]
@@ -69,14 +75,14 @@ docker run -dit --restart=always --name=postgres postgres
 
 To check it we can check the RestartPolicy
 docker inspect [container] | grep -A3 RestartPolicy
-
+cu
 Note The grep -A3 tells grep to print the matching line + the number of lines after the match. In this case 3
 
 docker stop
 will send the signal SIGTERM followed by SIGKILL after a grace period
 
 docker kill
-sends SIGKILL right away
+sends SIGKILL right away DONT USE THIS IF POSSIBLE
 
 ### Interacting with Containers
 
@@ -115,6 +121,24 @@ docker run -p 8080:80 --name another_nginx -v \${PWD}/webpages:/usr/share/nginx/
 
 To get a list of processes running within a docker container use
 docker top
+
+To get a list of the containers id
+
+```
+docker ps -a -q
+```
+
+to stop and remove all containers
+
+```
+docker ps -a -q | xargs -no-run-if-empty docker rm -f
+```
+
+To remove only the containers that have exited
+
+```
+docker ps -a -q --filter status-exited | xargs -no-run-if-empty docker rm
+```
 
 ### Logging
 
@@ -206,3 +230,23 @@ Otherwise we would have had to give it the ip address ie 172.??.??.??
 
 To attach a container to another network use the
 docker network connect
+
+## Docker machine
+
+To put docker on your virtualbox
+docker-machine create --driver virtualbox [nameofbox]
+
+A machine should appear in virtualbox
+
+docker-machine env [dockerhost]
+
+docker run -d -p 8080:80 httpd
+
+docker-machine ip [dockerhost]
+Then on the browser with the host ip say 192.168.99.100
+You can get to the browser
+192.168.99.100:8080
+
+### Note
+
+docker run -d --name wordpress --net host [image]

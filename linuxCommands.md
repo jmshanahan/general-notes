@@ -185,6 +185,12 @@ visudo
 netstat -nutlp
 ```
 
+### another useful one
+
+```
+netstat -tlpn
+```
+
 ### Determine which ports are open
 
 nmap is a good tool. It needs to be installed.
@@ -263,3 +269,9 @@ ListenAddress host_or_addressN
 ### netcat
 
 nc -v 10.0.0.8 80
+
+### Change Host Name
+
+```
+sudo hostnamectl set-hostname [netname]
+```
